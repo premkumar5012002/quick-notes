@@ -1,0 +1,11 @@
+[contenteditable] {
+	outline: 0px solid transparent;
+}
+
+.tiptap .is-empty::before {
+	color: #adb5bd;
+	content: attr(data-placeholder);
+	float: left;
+	height: 0;
+	pointer-events: none;
+}

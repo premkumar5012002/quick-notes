@@ -1,7 +1,8 @@
-import { NoteNavbar } from "@/components/note-navbar";
 import { IconNotebook } from "@tabler/icons-react";
 
-export default function Notes() {
+import { NoteNavbar } from "@/components/note-navbar";
+
+export default function Page() {
 	return (
 		<div>
 			<NoteNavbar />

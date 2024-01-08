@@ -11,9 +11,15 @@ interface Params {
 	};
 }
 
+export const dynamic = "force-dynamic";
+
+const getData = async (noteId: string) => {
+	return await api.notes.get.query(noteId);
+};
+
 export default async function page({ params }: Params) {
 	try {
-		const data = await api.notes.get.query(params.noteId);
+		const data = await getData(params.noteId);
 		return <NoteView initialData={data} />;
 	} catch (e) {
 		if (e instanceof TRPCClientError) {

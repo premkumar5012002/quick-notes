@@ -1,19 +1,25 @@
 import { PropsWithChildren } from "react";
-import { TRPCError } from "@trpc/server";
 import { redirect } from "next/navigation";
+import { TRPCClientError } from "@trpc/client";
 
 import { api } from "@/trpc/server";
 
 import { Providers } from "./providers";
 import { NotesLayoutView } from "./notes-layout-view";
-import { TRPCClientError } from "@trpc/client";
+
+export const dynamic = "force-dynamic";
+
+const getData = async () => {
+	const [user, notes] = await Promise.all([
+		api.user.me.query(),
+		api.notes.getAll.query(),
+	]);
+	return { user, notes };
+};
 
 export default async function NotesLayout(props: PropsWithChildren) {
 	try {
-		const [user, notes] = await Promise.all([
-			api.user.me.query(),
-			api.notes.getAll.query(),
-		]);
+		const { user, notes } = await getData();
 		return (
 			<Providers data={user}>
 				<NotesLayoutView data={notes}>{props.children}</NotesLayoutView>

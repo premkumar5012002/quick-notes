@@ -219,7 +219,7 @@ const CommandList = ({
 				command(item);
 			}
 		},
-		[command, editor, items]
+		[command, items]
 	);
 
 	useEffect(() => {

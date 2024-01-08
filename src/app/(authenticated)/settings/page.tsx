@@ -1,9 +1,11 @@
+"use client";
+
+import { NoteNavbar } from "@/components/note-navbar";
 import { ProfileForm } from "./profile";
 import { PasswordForm } from "./password";
 import { AccountOptions } from "./account";
-import { NoteNavbar } from "@/components/note-navbar";
 
-export default async function Page() {
+export default function Page() {
 	return (
 		<>
 			<NoteNavbar />

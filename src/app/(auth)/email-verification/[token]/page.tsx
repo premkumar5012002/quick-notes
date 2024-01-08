@@ -5,6 +5,7 @@ import { api } from "@/trpc/server";
 
 import { Navbar } from "../../nav-bar";
 import { Button } from "@/components/ui/button";
+import { TRPCClientError } from "@trpc/client";
 
 interface Params {
 	params: {
@@ -13,7 +14,18 @@ interface Params {
 }
 
 export default async function Page({ params }: Params) {
-	await api.auth.verifyEmail.mutate(params.token);
+	try {
+		await api.auth.verifyEmail.mutate(params.token);
+	} catch (e) {
+		if (e instanceof TRPCClientError) {
+			switch (e.message) {
+				case "BAD_REQUEST": {
+					throw new Error("Invalid token or expired");
+				}
+			}
+		}
+		throw new Error("Unknown error occured!");
+	}
 	return (
 		<>
 			<Navbar />

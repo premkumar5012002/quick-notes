@@ -7,7 +7,11 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getBaseUrl() {
-	return process.env.NEXT_PUBLIC_VERCEL_URL ?? "http://localhost:3000";
+	return (
+		process.env.BASE_URL ??
+		process.env.NEXT_PUBLIC_VERCEL_URL ??
+		"http://localhost:3000"
+	);
 }
 
 export const preventDefaultOnEnterKey = (

@@ -2,9 +2,8 @@
 
 import { IconX } from "@tabler/icons-react";
 
-import { RouterOutputs } from "@/trpc/shared";
-
 import { cn } from "@/lib/utils";
+import { RouterOutputs } from "@/trpc/shared";
 
 import { useLayoutStore } from "@/store/layout";
 
@@ -33,18 +32,17 @@ export const NoteSidebar = ({ notes }: Props) => {
 				<NotesPanel notes={notes} />
 				<NewNoteButton />
 			</aside>
-
 			{/* Drawer */}
 			<Sheet open={isDrawerOpen} onOpenChange={toggleDrawer}>
 				<SheetContent side="left" className="p-0 overflow-y-scroll">
 					<div className="flex flex-col absolute inset-0">
 						<div className="flex items-center justify-between px-2">
-							<Logo />
+							<Logo onClose={toggleDrawer} />
 							<Button variant="outline" onClick={toggleDrawer}>
 								<IconX size={18} />
 							</Button>
 						</div>
-						<NotesPanel notes={notes} />
+						<NotesPanel notes={notes} onClose={toggleDrawer} />
 						<NewNoteButton />
 					</div>
 				</SheetContent>

@@ -2,10 +2,10 @@ import Link from "next/link";
 import { IconMailCheck } from "@tabler/icons-react";
 
 import { api } from "@/trpc/server";
+import { TRPCClientError } from "@trpc/client";
 
 import { Navbar } from "../../nav-bar";
 import { Button } from "@/components/ui/button";
-import { TRPCClientError } from "@trpc/client";
 
 interface Params {
 	params: {
@@ -37,9 +37,7 @@ export default async function Page({ params }: Params) {
 						</div>
 
 						<div className="space-y-3">
-							<h3 className="font-semibold text-2xl md:text-3xl">
-								Email Verified
-							</h3>
+							<h3 className="font-semibold text-2xl md:text-3xl">Email Verified</h3>
 
 							<p className="text-sm md:text-base text-muted-foreground">
 								Thank you for verifying your email.

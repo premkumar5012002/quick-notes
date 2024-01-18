@@ -1,27 +1,17 @@
-import {
-	IconSun,
-	IconMoon,
-	IconLogout,
-	IconCaretUpDown,
-	IconChevronDown,
-	IconSettings,
-} from "@tabler/icons-react";
+import { FC } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
+import { IconSun, IconMoon, IconLogout, IconChevronDown, IconSettings } from "@tabler/icons-react";
 
 import { api } from "@/trpc/react";
 
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@/components/ui/popover";
 import { Button } from "../ui/button";
-import Link from "next/link";
 import { ButtonLoading } from "../loading-button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
-export const Logo = () => {
+export const Logo: FC<{ onClose?: () => void }> = ({ onClose }) => {
 	const router = useRouter();
 
 	const { theme, setTheme } = useTheme();
@@ -42,6 +32,7 @@ export const Logo = () => {
 	};
 
 	const onLogout = () => {
+		onClose?.();
 		logoutMutation.mutate();
 	};
 
@@ -52,19 +43,13 @@ export const Logo = () => {
 					<Button variant="ghost" className="w-full justify-between gap-4">
 						<div className="flex items-center gap-1.5">
 							<Image alt="Logo" width={28} height={28} src="/logo.svg" />
-							<span className="text-lg font-semibold text-foreground">
-								QuickNotes
-							</span>
+							<span className="text-lg font-semibold text-foreground">QuickNotes</span>
 						</div>
 						<IconChevronDown size={18} />
 					</Button>
 				</PopoverTrigger>
 				<PopoverContent className="p-1">
-					<Button
-						variant="ghost"
-						className="w-full justify-start"
-						onClick={onThemeChange}
-					>
+					<Button variant="ghost" className="w-full justify-start" onClick={onThemeChange}>
 						{theme === "dark" ? (
 							<>
 								<IconSun size={18} className="mr-2" /> Light mode
@@ -77,7 +62,7 @@ export const Logo = () => {
 					</Button>
 
 					<Button variant="ghost" className="w-full justify-start" asChild>
-						<Link href="/settings">
+						<Link href="/settings" onClick={onClose}>
 							<IconSettings size={18} className="mr-2" /> Settings
 						</Link>
 					</Button>
@@ -85,11 +70,7 @@ export const Logo = () => {
 					{logoutMutation.isLoading ? (
 						<ButtonLoading variant="ghost" className="w-full justify-start" />
 					) : (
-						<Button
-							variant="ghost"
-							className="w-full justify-start"
-							onClick={onLogout}
-						>
+						<Button variant="ghost" className="w-full justify-start" onClick={onLogout}>
 							<IconLogout size={18} className="mr-2" /> Logout
 						</Button>
 					)}

@@ -11,14 +11,15 @@ import { Button } from "../ui/button";
 
 interface Props {
 	notes: RouterOutputs["notes"]["getAll"];
+	onClose?: () => void;
 }
 
-export const NotesPanel = ({ notes }: Props) => {
+export const NotesPanel = ({ notes, onClose }: Props) => {
 	return (
 		<ScrollArea className="flex-1 border-t border-b">
 			<div className="p-2 space-y-1.5">
 				{notes.map((note) => (
-					<NotePanel key={note.id} note={note} />
+					<NotePanel key={note.id} note={note} onClose={onClose} />
 				))}
 			</div>
 		</ScrollArea>
@@ -27,9 +28,10 @@ export const NotesPanel = ({ notes }: Props) => {
 
 interface NotePanelProps {
 	note: Note;
+	onClose?: () => void;
 }
 
-const NotePanel = ({ note }: NotePanelProps) => {
+const NotePanel = ({ note, onClose }: NotePanelProps) => {
 	const params = useParams();
 
 	const isCurrentNote = params.noteId === note.id;
@@ -43,12 +45,10 @@ const NotePanel = ({ note }: NotePanelProps) => {
 				isCurrentNote ? "text-secondary-foreground" : "text-muted-foreground"
 			)}
 		>
-			<Link href={`/notes/${note.id}`}>
+			<Link href={`/notes/${note.id}`} onClick={onClose}>
 				<div className="flex items-center truncate">
 					<IconFileText size={20} className="absolute" />
-					<p className="truncate w-64 text-sm pl-6">
-						{note.title ?? "Untitled"}
-					</p>
+					<p className="truncate w-64 text-sm pl-6">{note.title ?? "Untitled"}</p>
 				</div>
 			</Link>
 		</Button>
